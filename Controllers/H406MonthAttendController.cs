@@ -1,8 +1,11 @@
-﻿using GPAttendSystemAPI.Data;
+﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
+using GPAttendSystemAPI.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
+using System.Drawing.Text;
 
 namespace GPAttendSystemAPI.Controllers
 {
@@ -15,7 +18,7 @@ namespace GPAttendSystemAPI.Controllers
         {
             _db = db;
         }
-        
+
         [Authorize(Roles = "DataMining, ExpertSystem")]
         [HttpGet("GetStudents")]
         public IActionResult GetStudents()
@@ -25,32 +28,16 @@ namespace GPAttendSystemAPI.Controllers
             DateOnly firstDayOfMonth = DateOnly.FromDateTime(DateTime.Today.AddDays(1 - DateTime.Today.Day));
             DateOnly lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
 
-            TimeSpan startTime, endTime;
-
-            if (role == "DataMining")
-            {
-                startTime = TimeSpan.FromHours(11.5);
-                endTime = TimeSpan.FromHours(14.5);
-            }
-            else if (role == "ExpertSystem")
-            {
-                startTime = TimeSpan.FromHours(8);
-                endTime = TimeSpan.FromHours(11.5);
-            }
-            else
-            {
-                return StatusCode(403, new { error = "Invalid role" });
-            }
-
             var students = _db.H406AttendRecoreds
-                .Where(s => s.AttendDate >= firstDayOfMonth && s.AttendDate <= lastDayOfMonth)  // Attendance within the current month
-                             
+                .Where(s => s.AttendDate >= firstDayOfMonth && s.AttendDate <= lastDayOfMonth &&
+                            ((role == "DataMining" && s.AttendTime >= TimeSpan.FromHours(8) && s.AttendTime <= TimeSpan.FromHours(11)) ||
+                             (role == "ExpertSystem" && s.AttendTime >= TimeSpan.FromHours(11.5) && s.AttendTime <= TimeSpan.FromHours(14))))
                 .Select(s => new
                 {
-                    
+
                     s.StudentName,
-                    AttendDate = s.AttendDate.HasValue ? s.AttendDate.Value.ToString("yyyy-MM-dd") : null, // Handle null value
-                    AttendTime = s.AttendTime.HasValue ? s.AttendTime.Value.ToString(@"hh\:mm") : null // Handle null value
+                    AttendDate = s.AttendDate.HasValue ? s.AttendDate.Value.ToString("yyyy-MM-dd") : null,
+                    AttendTime = s.AttendTime.HasValue ? s.AttendTime.Value.ToString(@"hh\:mm") : null
                 })
                 .ToList();
 
@@ -58,11 +45,12 @@ namespace GPAttendSystemAPI.Controllers
             {
                 return NotFound("No data available for this month. Have a nice day!");
             }
+
             // Add role-specific message at the top of the results
             string customHallNumber = "404"; // Replace with your desired custom hall number
             string message = role == "DataMining"
-                ? $"Subject: Data Mining, Hall: {customHallNumber},Monthly Attendance "
-                : $"Subject: Expert System, Hall: {customHallNumber}, Monthly Attendance" ;
+                ? $"Subject: Data Mining, Hall: {customHallNumber}"
+                : $"Subject: Expert System, Hall: {customHallNumber}";
 
             var result = new List<object> { new { Message = message } };
             result.AddRange(students);
@@ -70,6 +58,6 @@ namespace GPAttendSystemAPI.Controllers
             return Ok(result);
         }
 
-
     }
 }
+

@@ -24,7 +24,7 @@ namespace GPAttendSystemAPI.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly IConfiguration configuration;
 
-        [HttpGet, Authorize]
+        [HttpGet("PROD"), Authorize]
         public ActionResult<object> GetMe()
         {
             var username = User?.Identity.Name;
@@ -33,7 +33,7 @@ namespace GPAttendSystemAPI.Controllers
             return Ok (new { username, username2, role });  
         }
 
-        [HttpPost("Register")]
+        [HttpPost("RegisterPROD")]
         public async Task<IActionResult> RegisterNewUser(dtoNewUser user)
         {
             if (ModelState.IsValid)
