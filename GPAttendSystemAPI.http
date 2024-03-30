@@ -1,0 +1,6 @@
+@GPAttendSystemAPI_HostAddress = http://localhost:5001
+
+GET {{GPAttendSystemAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
