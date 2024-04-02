@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GPAttendSystemAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240329235317_InitialAttendh406")]
-    partial class InitialAttendh406
+    [Migration("20240402053201_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,6 +43,10 @@ namespace GPAttendSystemAPI.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("tinyint(1)");
@@ -97,10 +101,10 @@ namespace GPAttendSystemAPI.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateOnly>("AttendDate")
+                    b.Property<DateOnly?>("AttendDate")
                         .HasColumnType("date");
 
-                    b.Property<TimeSpan>("AttendTime")
+                    b.Property<TimeSpan?>("AttendTime")
                         .HasColumnType("time(6)");
 
                     b.Property<string>("StudentName")

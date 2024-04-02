@@ -24,40 +24,35 @@ namespace GPAttendSystemAPI.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly IConfiguration configuration;
 
-        [HttpGet("PROD"), Authorize]
-        public ActionResult<object> GetMe()
-        {
-            var username = User?.Identity.Name;
-            var username2 = User.FindFirstValue(ClaimTypes.Name);
-            var role = User.FindFirstValue(ClaimTypes.Role);
-            return Ok (new { username, username2, role });  
-        }
+      
+        //[HttpPost("registerprod")]
+        //public async Task<IActionResult> RegisterNewUser(dtoNewUser user)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var appUser = new AppUser
+        //        {
+        //            UserName = user.userName,
+        //            Email = user.email,
 
-        [HttpPost("RegisterPROD")]
-        public async Task<IActionResult> RegisterNewUser(dtoNewUser user)
-        {
-            if (ModelState.IsValid)
-            {
-                AppUser appUser = new()
-                {
-                    UserName = user.userName,
-                    Email = user.email,
-                };
-                IdentityResult result = await _userManager.CreateAsync(appUser, user.password);
-                if (result.Succeeded)
-                {
-                    return Ok("Success");
-                }
-                else
-                {
-                    foreach (var item in result.Errors)
-                    {
-                        ModelState.AddModelError("", item.Description);
-                    }
-                }
-            }
-            return BadRequest(ModelState);
-        }
+        //        };
+
+        //        var result = await _userManager.CreateAsync(appUser, user.password);
+        //        if (result.Succeeded)
+        //        {
+        //            return Ok("Success");
+        //        }
+        //        else
+        //        {
+        //            foreach (var error in result.Errors)
+        //            {
+        //                ModelState.AddModelError("", error.Description);
+        //            }
+        //        }
+        //    }
+        //    return BadRequest(ModelState);
+        //}
+
 
         [HttpPost("Login")]
         public async Task<IActionResult> LogIn(dtoLogin login)
@@ -71,18 +66,21 @@ namespace GPAttendSystemAPI.Controllers
                     {
                         var claims = new List<Claim>();
                         claims.Add(new Claim(ClaimTypes.Name, user.UserName));
-                        claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
+                        claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id)); 
                         claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
+                        
 
                         // Add role-based claims
-                        if (user.UserName == "DrEmanTest")
+                        if (user.UserName == "DrEman")
                         {
                             claims.Add(new Claim(ClaimTypes.Role, "DataMining"));
                         }
-                        else if (user.UserName == "DrMohamedTest")
+                        else if (user.UserName == "DrMohamed")
                         {
                             claims.Add(new Claim(ClaimTypes.Role, "ExpertSystem"));
                         }
+                        
+
 
                         // Create and sign the JWT token
                         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:SecretKey"]));
@@ -112,6 +110,23 @@ namespace GPAttendSystemAPI.Controllers
                 }
             }
             return BadRequest(ModelState);
+        }
+
+
+
+
+        [HttpGet("Schedule"), Authorize]
+        public ActionResult<object> GetMe()
+        {
+
+            var username = User.FindFirstValue(ClaimTypes.Name);
+    
+            var Subjects = User.FindFirstValue(ClaimTypes.Role);
+
+            var Hall = "406";
+
+
+            return Ok(new { username,Subjects, Hall });
         }
     }
 

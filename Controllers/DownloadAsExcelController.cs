@@ -42,7 +42,7 @@ namespace GPAttendSystemAPI.Controllers
 
             if (students.Count == 0)
             {
-                return NotFound("No data available for today. Have a nice day!");
+                return NotFound("There is no available attendance for today. Have a nice day!");
             }
 
 
@@ -101,7 +101,7 @@ namespace GPAttendSystemAPI.Controllers
 
             if (students.Count == 0)
             {
-                return NotFound("No data available for this month. Have a nice day!");
+                return NotFound("There is no available attendance for this month. Have a nice day!");
             }
 
             // Create a new Excel workbook using ClosedXML
@@ -128,7 +128,7 @@ namespace GPAttendSystemAPI.Controllers
                     workbook.SaveAs(stream);
 
                     // Return the Excel file as a downloadable attachment
-                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"MonthAttendance_{role}(H406).xlsx");
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"MonthAttendance_ {role} (H406).xlsx");
                 }
             }
         }
@@ -157,10 +157,10 @@ namespace GPAttendSystemAPI.Controllers
                 })
                 .ToList();
 
-            // If there are no students found, return a NotFound result with a friendly message.
+            // If there are no students found, return a NotFound
             if (students.Count == 0)
             {
-                return NotFound("No data available for the last 4 months. Have a nice day!");
+                return NotFound("There is no available attendance for the last 4 months. Have a nice day!");
             }
             // Create a new Excel workbook using ClosedXML
             using (var workbook = new XLWorkbook())

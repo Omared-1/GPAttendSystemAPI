@@ -40,7 +40,7 @@ namespace GPAttendSystemAPI.Controllers
 
             if (students.Count == 0)
             {
-                return NotFound("No data available for today. Have a nice day!");
+                return NotFound("There is no available attendance for today. Have a nice day!");
             }
 
             // Add role-specific message at the top of the results
@@ -67,7 +67,7 @@ namespace GPAttendSystemAPI.Controllers
             var students = _db.H406AttendRecoreds
                 .Where(s => s.AttendDate >= firstDayOfMonth && s.AttendDate <= lastDayOfMonth &&
                             ((role == "DataMining" && s.AttendTime >= TimeSpan.FromHours(8) && s.AttendTime <= TimeSpan.FromHours(11.3)) ||
-                             (role == "ExpertSystem" && s.AttendTime >= TimeSpan.FromHours(11.4) && s.AttendTime <= TimeSpan.FromHours(14))))
+                             (role == "DataStructure" && s.AttendTime >= TimeSpan.FromHours(11.4) && s.AttendTime <= TimeSpan.FromHours(14))))
                 .Select(s => new
                 {
 
@@ -75,11 +75,11 @@ namespace GPAttendSystemAPI.Controllers
                     AttendDate = s.AttendDate.HasValue ? s.AttendDate.Value.ToString("yyyy-MM-dd") : null,
                     AttendTime = s.AttendTime.HasValue ? s.AttendTime.Value.ToString(@"hh\:mm") : null
                 })
-                .ToList();
+                .ToList(); 
 
             if (students.Count == 0)
             {
-                return NotFound("No data available for this month. Have a nice day!");
+                return NotFound("There is no available attendance for this month. Have a nice day!");
             }
 
             // Add role-specific message at the top of the results
@@ -121,7 +121,7 @@ namespace GPAttendSystemAPI.Controllers
             // If there are no students found, return a NotFound result with a friendly message.
             if (students.Count == 0)
             {
-                return NotFound("No data available for the last 4 months. Have a nice day!");
+                return NotFound("There is no available attendance for the last 4 months. Have a nice day!");
             }
 
             // Add role-specific message at the top of the results

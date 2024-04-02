@@ -4,8 +4,8 @@ namespace GPAttendSystemAPI.Data.Models
 {
     public class AppUser : IdentityUser
     {
-
+        
     }
 
-    
+
 }

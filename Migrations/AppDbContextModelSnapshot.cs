@@ -41,6 +41,10 @@ namespace GPAttendSystemAPI.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("tinyint(1)");
 
@@ -94,10 +98,10 @@ namespace GPAttendSystemAPI.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateOnly>("AttendDate")
+                    b.Property<DateOnly?>("AttendDate")
                         .HasColumnType("date");
 
-                    b.Property<TimeSpan>("AttendTime")
+                    b.Property<TimeSpan?>("AttendTime")
                         .HasColumnType("time(6)");
 
                     b.Property<string>("StudentName")

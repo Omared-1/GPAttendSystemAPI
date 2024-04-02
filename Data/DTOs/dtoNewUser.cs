@@ -9,7 +9,7 @@ namespace GPAttendSystemAPI.Data.DTOs
 
         [Required]
         public string password { get; set; }
-
+       
         [Required]
         public string email { get; set; }
 
