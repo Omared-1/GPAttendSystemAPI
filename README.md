@@ -14,12 +14,11 @@ This repository contains the documentation for the Attendance API, a Web API bui
 
 ### Authentication
 
-- **POST /api/auth/login**: Authenticates a user and returns a JWT token.
-- **POST /api/auth/register**: Registers a new user.
+- **POST /api/AccountController/login**: Authenticates a user and returns a JWT token.
+- **GET /api/AccountController/Schedule**: Registers a new user.
 
 ### Attendance Management
 
-- **POST /api/attendance**: Submits attendance data from ESP32 devices.
 - **GET /api/attendance/today**: Retrieves today's attendance data.
 - **GET /api/attendance/monthly**: Retrieves monthly attendance data.
 - **GET /api/attendance/semester**: Retrieves semester attendance data.
