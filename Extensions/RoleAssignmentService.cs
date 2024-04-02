@@ -19,7 +19,7 @@ namespace GPAttendSystemAPI.Extensions
         {
             if (!await _roleManager.RoleExistsAsync(DataMining))
             {
-                // Create the role if it doesn't exist
+                // Create the role if it doesn't exists
                 await _roleManager.CreateAsync(new IdentityRole(DataMining));
             }
 
