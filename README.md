@@ -1,10 +1,9 @@
-# Attendance API Documentation
+# Attendance API Documentation (Asp.NET APi, Ef Core, LinQ, MySQL)
+ 
 
-This repository contains the documentation for the Attendance API, a Web API built using ASP.NET 8, MySQL, JWT Authentication, and Entity Framework Core. The API is designed to handle attendance data sent by ESP32 devices powered by AI, while also managing authentication and authorization for professors.
 
 ## Features
 
-- **ESP32 Integration**: Allows ESP32 devices powered by AI to send attendance data to the API.
 - **Authentication & Authorization**: Provides secure authentication and authorization mechanisms for users.
 - **Dynamic Data Handling**: Automatically manages professor data based on their subjects in the current hall.
 - **Effortless Reporting**: Generates today, monthly, and semester attendance data based on the professor's role (subject) without additional effort from the professor.
@@ -55,13 +54,11 @@ Professors can download attendance data as an Excel sheet using the following en
 - `/api/DownloadAsExcel/MonthAttendExcel`: Download monthly attendance data as an Excel sheet.
 - `/api/DownloadAsExcel/SemsterAttendExcel`: Download semester attendance data as an Excel sheet.
 
-## Contributing
 
-Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or create a pull request.
 
 ## Team 
 Omar Mohamed : Software Enginner | Back-End Devolper 
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License 
