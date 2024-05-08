@@ -59,6 +59,9 @@ Professors can download attendance data as an Excel sheet using the following en
 
 Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or create a pull request.
 
+## Team 
+Omar Mohamed : Software Enginner | Back-End Devolper 
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

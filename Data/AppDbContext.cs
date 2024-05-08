@@ -11,6 +11,8 @@ namespace GPAttendSystemAPI.Data
 
         }
         public DbSet<H406AttendRecored> H406AttendRecoreds { get; set; }
+        
 
     }
 }
+

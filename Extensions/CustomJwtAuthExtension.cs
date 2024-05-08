@@ -22,9 +22,9 @@ namespace GPAttendSystemAPI.Extensions
                 o.SaveToken = true;
                 o.TokenValidationParameters = new TokenValidationParameters()
                 {
-                    ValidateIssuer = true,
+                    ValidateIssuer = false,
                     ValidIssuer = configuration["JWT:Issuer"],
-                    ValidateAudience = true,
+                    ValidateAudience = false,
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:SecretKey"]))
                 };

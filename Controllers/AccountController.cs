@@ -1,4 +1,5 @@
-﻿using GPAttendSystemAPI.Data.DTOs;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using GPAttendSystemAPI.Data.DTOs;
 using GPAttendSystemAPI.Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -71,11 +72,11 @@ namespace GPAttendSystemAPI.Controllers
                         
 
                         // Add role-based claims
-                        if (user.UserName == "DrEman")
+                        if (user.UserName == "DrEmanTest")
                         {
                             claims.Add(new Claim(ClaimTypes.Role, "DataMining"));
                         }
-                        else if (user.UserName == "DrMohamed")
+                        else if (user.UserName == "DrMohamedTest")
                         {
                             claims.Add(new Claim(ClaimTypes.Role, "ExpertSystem"));
                         }
@@ -118,11 +119,9 @@ namespace GPAttendSystemAPI.Controllers
         [HttpGet("Schedule"), Authorize]
         public ActionResult<object> GetMe()
         {
-
+            
             var username = User.FindFirstValue(ClaimTypes.Name);
-    
             var Subjects = User.FindFirstValue(ClaimTypes.Role);
-
             var Hall = "406";
 
 

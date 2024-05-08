@@ -41,10 +41,6 @@ namespace GPAttendSystemAPI.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("tinyint(1)");
 
@@ -110,6 +106,31 @@ namespace GPAttendSystemAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("H406AttendRecoreds");
+                });
+
+            modelBuilder.Entity("GPAttendSystemAPI.Data.Models.H406RFIDs", b =>
+                {
+                    b.Property<int>("StudentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("StudentId"));
+
+                    b.Property<DateOnly?>("AttendDate")
+                        .HasColumnType("date");
+
+                    b.Property<TimeSpan?>("AttendTime")
+                        .HasColumnType("time(6)");
+
+                    b.Property<bool>("IsValid")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("StudentName")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("StudentId");
+
+                    b.ToTable("H406RFIDS");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
